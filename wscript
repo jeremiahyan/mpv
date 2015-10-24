@@ -464,6 +464,12 @@ FFmpeg/Libav libraries. You need at least {0}. Aborting.".format(libav_versions_
         'func': check_statement('libavcodec/avcodec.h',
                                 'int x[(int)sizeof(((AVPacket){0}).duration) - 7]',
                                 use='libav'),
+    }, {
+        'name': 'av-subtitle-nopict',
+        'desc': 'libavcodec AVSubtitleRect AVPicture removal',
+        'func': check_statement('libavcodec/avcodec.h',
+                                'AVSubtitleRect r = {.linesize={0}}',
+                                use='libav'),
     },
 ]
 
@@ -647,22 +653,18 @@ video_output_features = [
         'desc': 'VAAPI acceleration',
         'deps': [ 'libdl' ],
         'deps_any': [ 'x11', 'wayland' ],
-        'func': check_pkg_config('libva', '>= 0.34.0'),
+        'func': check_pkg_config('libva', '>= 0.36.0'),
     }, {
         'name': '--vaapi-x11',
         'desc': 'VAAPI (X11 support)',
         'deps': [ 'vaapi', 'x11' ],
-        'func': check_pkg_config('libva-x11', '>= 0.34.0'),
+        'func': check_pkg_config('libva-x11', '>= 0.36.0'),
     }, {
         'name': '--vaapi-wayland',
         'desc': 'VAAPI (Wayland support)',
         'deps': [ 'vaapi', 'wayland' ],
-        'func': check_pkg_config('libva-wayland', '>= 0.34.0'),
-    }, {
-        'name': '--vaapi-vpp',
-        'desc': 'VAAPI VPP',
-        'deps': [ 'vaapi' ],
-        'func': check_pkg_config('libva', '>= 0.34.0'),
+        'func': check_pkg_config('libva-wayland', '>= 0.36.0'),
+
     }, {
         'name': '--vaapi-glx',
         'desc': 'VAAPI GLX',

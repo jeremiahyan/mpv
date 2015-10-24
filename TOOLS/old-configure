@@ -618,12 +618,6 @@ _vaapi_wayland=auto
 fi
 check_pkg_config "VAAPI Wayland" $_vaapi_wayland VAAPI_WAYLAND 'libva-wayland >= 0.34.0'
 
-if test "$_vaapi" = yes ; then
-    check_pkg_config "VAAPI VPP" auto VAAPI_VPP 'libva >= 0.34.0'
-else
-    check_yes_no no VAAPI_VPP
-fi
-
 check_pkg_config "Xinerama" $_xinerama XINERAMA 'xinerama'
 
 check_pkg_config "Xrandr" $_xrandr XRANDR 'xrandr >= 1.2.0'
@@ -821,6 +815,12 @@ api_statement_check \
     HAVE_AV_AVPACKET_INT64_DURATION \
     libavcodec/avcodec.h \
     'int x[(int)sizeof(((AVPacket){0}).duration) - 7]'
+
+api_statement_check \
+    "libavcodec AVSubtitleRect AVPicture removal" \
+    HAVE_AV_SUBTITLE_NOPICT \
+    libavcodec/avcodec.h \
+    'AVSubtitleRect r = {.linesize={0}}'
 
 check_pkg_config "libavfilter" $_libavfilter LIBAVFILTER 'libavfilter >= 5.0.0'
 
